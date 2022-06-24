@@ -34,6 +34,7 @@ export default class CadastroCliente extends Cadastro {
         let dia = new Number(partesData[0].valueOf()).valueOf()
         let dataEmissao = new Date(ano, mes, dia)
         let cpf = new CPF(valor, dataEmissao);
+        let cliente = new Cliente(nome, nomeSocial, cpf, genero);
         //RG
         valor = this.entrada.receberTexto(`Por favor informe o número do RG: `);
         data = this.entrada.receberTexto(`Por favor informe a data de emissão do RG, no padrão dd/mm/yyyy: `);
@@ -43,17 +44,38 @@ export default class CadastroCliente extends Cadastro {
         dia = new Number(partesData[0].valueOf()).valueOf()
         dataEmissao = new Date(ano, mes, dia)
         let rg = new RG(valor, dataEmissao)
+        cliente.getRgs.push(rg);
+        let novo = this.entrada.receberTexto(`Digitar outro RG? Sim / Não ? `)
+        while (novo == 'Sim' || novo == 'sim') {
+            valor = this.entrada.receberTexto(`Por favor informe o número do RG: `);
+            data = this.entrada.receberTexto(`Por favor informe a data de emissão do RG, no padrão dd/mm/yyyy: `);
+            partesData = data.split('/')
+            ano = new Number(partesData[2].valueOf()).valueOf()
+            mes = new Number(partesData[1].valueOf()).valueOf()
+            dia = new Number(partesData[0].valueOf()).valueOf()
+            dataEmissao = new Date(ano, mes, dia)
+            let rg = new RG(valor, dataEmissao)
+            cliente.getRgs.push(rg);
+            novo = this.entrada.receberTexto(`Digitar outro RG? Sim / Não ? `)
+        }
         // Telefone
         let tell = this.entrada.receberTexto(`Por favor digite o numero do telefone no padrão DDD NUMERO:`);
         let partesTell = tell.split(' ')
         let ddd = new String(partesTell[0].valueOf()).valueOf()
         let numero = new String(partesTell[1].valueOf()).valueOf()
         let telefone = new Telefone(ddd, numero)
-        // CPF, RG, TELEFONE PUSH
-        let cliente = new Cliente(nome, nomeSocial, cpf, genero);
-        cliente.getDataCadastro.getDay
-        cliente.getRgs.push(rg);
         cliente.getTelefones.push(telefone)
+        novo = this.entrada.receberTexto(`Digitar outro Telefone? Sim / Não ? `)
+        while (novo == 'Sim' || novo == 'sim') {
+            let tell = this.entrada.receberTexto(`Por favor digite o numero do telefone no padrão DDD NUMERO:`);
+            let partesTell = tell.split(' ')
+            let ddd = new String(partesTell[0].valueOf()).valueOf()
+            let numero = new String(partesTell[1].valueOf()).valueOf()
+            let telefone = new Telefone(ddd, numero)
+            cliente.getTelefones.push(telefone)
+            novo = this.entrada.receberTexto(`Digitar outro RG? Sim / Não ? `)
+        }
+        cliente.getDataCadastro.getDay
         //PRODUTOS
         console.log(`Digite os produtos consumidos no padrão: \nProduto A, Produto B, Produto C.... ou apenas Produto A: `)
         nome = this.entrada.receberTexto(`Nome dos produtos: `)
