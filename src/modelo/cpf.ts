@@ -11,4 +11,10 @@ export default class CPF {
     public get getDataEmissao(): Date {
         return this.dataEmissao
     }
+    public set setValor(valor: string){
+        this.valor = valor;
+    }
+    public set setDataEmissao(dataEmissao: Date){
+        this.dataEmissao = dataEmissao
+    }
 }
